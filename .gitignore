@@ -1,0 +1,5 @@
+*.pyc
+/env/
+*.sublime-project
+*.sublime-workspace
+*.egg-info/
