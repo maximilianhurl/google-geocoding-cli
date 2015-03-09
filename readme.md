@@ -1,11 +1,14 @@
 
-#TO DO
+## TO DO
 
-# === improve custom exceptions
-# === improve logging of exceptons - how to use with click?
-# === add reverse geocode
-# === add tests
-# === add support for JSON
+- improve custom exceptions
+- improve logging of exceptons - how to use with click?
+- add reverse geocode
+- add tests
+- add support for JSON
+
+
+## Features
 
 - Will add columns files to data file
 - When completed will replace the original file
@@ -19,9 +22,11 @@
 
 
 ###Installing manually
-    
-- Clone the repo    
+   
+- Clone the repo
 
-    $ virtualenv env
+Now run the following inside the  directory
+
+	$ virtualenv env
     $ source env/bin/activate
     $ pip install --editable .
