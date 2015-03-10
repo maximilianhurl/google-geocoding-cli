@@ -37,9 +37,9 @@ class Geocode(SearchBase):
 
     def search(self, row):
 
-        if not row['latitude'] or not row['longitude']:
+        if 'latitude' not in row.keys() or 'longitude' not in row.keys():
 
-            if not row['address']:
+            if 'address' not in row.keys():
                 raise GeocoderException("Missing data: address")
 
             payload = {'key': self.current_key, 'address': row['address']}
