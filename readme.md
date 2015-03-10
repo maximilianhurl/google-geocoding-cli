@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/maximilianhurl/google-geocoding-cli.svg)](https://travis-ci.org/maximilianhurl/google-geocoding-cli)
 
 ## TO DO
 
