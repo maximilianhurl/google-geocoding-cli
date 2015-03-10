@@ -3,4 +3,8 @@
 export PATH=env/bin:${PATH}
 
 coverage run  --source=scripts --omit='*__init__.py' tests/test_runner.py $@
+echo ""
+echo "Running flake8"
+flake8 scripts --ignore=E128,E501
+echo ""
 coverage report

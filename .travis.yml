@@ -4,4 +4,4 @@ python:
 install:
  - pip install -r requirements.txt
 script: ./runtests
-after_success: env/bin/coveralls
+after_success: coveralls
