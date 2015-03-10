@@ -1,7 +1,7 @@
 import unittest
 import requests_mock
 from scripts.search import Geocode
-from scripts.exceptions import GeocoderException
+from scripts.exceptions import GeocoderException, GeocoderOverLimitException
 
 
 class SearchTestCase(unittest.TestCase):
@@ -13,6 +13,7 @@ class SearchTestCase(unittest.TestCase):
 
         self.geocode = Geocode()
         self.geocode.set_key(self.key)
+        self.data = {"address": "cat st,seagulltown, uk"}
 
     def test_key(self):
         self.assertEqual(self.geocode.current_key, self.key)
@@ -30,9 +31,6 @@ class SearchTestCase(unittest.TestCase):
 
     @requests_mock.Mocker()
     def test_search_query(self, requests_mock):
-        data = {
-            "address": "cat st,seagulltown, uk"
-        }
 
         json = {
             "results": [
@@ -50,7 +48,7 @@ class SearchTestCase(unittest.TestCase):
 
         requests_mock.register_uri('GET', self.geocode.URL, json=json)
 
-        response = self.geocode.search(data)
+        response = self.geocode.search(self.data)
         self.assertEqual(response, {
             'latitude': '0.0111', 'longitude': '0.0222', 'address': 'cat st,seagulltown, uk'
         })
@@ -59,5 +57,30 @@ class SearchTestCase(unittest.TestCase):
         self.assertEqual(len(history), 1)
         self.assertEqual(history[0].qs, {'key': [self.key], 'address': ['cat st,seagulltown, uk']})
 
-    def test_search_query_validation(self):
-        pass
+    @requests_mock.Mocker()
+    def test_search_query_status_error(self, requests_mock):
+
+        requests_mock.register_uri('GET', self.geocode.URL, status_code=400)
+
+        with self.assertRaises(GeocoderException):
+            self.geocode.search(self.data)
+
+    @requests_mock.Mocker()
+    def test_search_query_over_limit(self, requests_mock):
+
+        json = {"status": "OVER_QUERY_LIMIT"}
+
+        requests_mock.register_uri('GET', self.geocode.URL, json=json)
+
+        with self.assertRaises(GeocoderOverLimitException):
+            self.geocode.search(self.data)
+
+    @requests_mock.Mocker()
+    def test_search_query_over_google_status_error(self, requests_mock):
+
+        json = {"status": "AUTH ERROR"}
+
+        requests_mock.register_uri('GET', self.geocode.URL, json=json)
+
+        with self.assertRaises(GeocoderException):
+            self.geocode.search(self.data)
