@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+export PATH=env/bin:${PATH}
+
+coverage run  --source=scripts --omit='*__init__.py' tests/test_runner.py $@
+coverage report
