@@ -26,7 +26,7 @@ class SearchTestCase(unittest.TestCase):
         }
         self.assertEqual(self.geocode.search(data), data)
 
-        with self.assertRaises(GeocoderException):
+        with self.assertRaisesRegexp(GeocoderException, "Missing data: address"):
             self.geocode.search({})
 
     @requests_mock.Mocker()
@@ -62,7 +62,7 @@ class SearchTestCase(unittest.TestCase):
 
         requests_mock.register_uri('GET', self.geocode.URL, status_code=400)
 
-        with self.assertRaises(GeocoderException):
+        with self.assertRaisesRegexp(GeocoderException, "Status Error: 400"):
             self.geocode.search(self.data)
 
     @requests_mock.Mocker()
@@ -76,11 +76,11 @@ class SearchTestCase(unittest.TestCase):
             self.geocode.search(self.data)
 
     @requests_mock.Mocker()
-    def test_search_query_over_google_status_error(self, requests_mock):
+    def test_search_query_google_status_error(self, requests_mock):
 
         json = {"status": "AUTH ERROR"}
 
         requests_mock.register_uri('GET', self.geocode.URL, json=json)
 
-        with self.assertRaises(GeocoderException):
+        with self.assertRaisesRegexp(GeocoderException, "Results Error: AUTH ERROR"):
             self.geocode.search(self.data)

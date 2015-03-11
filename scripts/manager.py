@@ -9,8 +9,6 @@ from scripts.exceptions import (
 
 class GeocodingManager():
 
-    REQUIRED_COLS = ['address', 'latitude', 'longitiude']
-
     GEOCODE_TYPE = 'geocode'
 
     def __init__(self, keys, input_file_path, query_type=GEOCODE_TYPE):
