@@ -4,11 +4,10 @@
 
 ## TO DO
 
-- improve custom exceptions
-- improve logging of exceptons - how to use with click?
 - add reverse geocode
 - add tests
 - add support for JSON
+- Improve readme instructions
 
 
 ## Features
