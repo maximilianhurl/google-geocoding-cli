@@ -11,6 +11,7 @@ class FileHanlderBase(object):
             raise GeocoderSetupException("Unable to find file: %s" % input_file_path)
 
         self.input_file_path = input_file_path
+        self.input_file = None
 
         dirname = os.path.dirname(input_file_path)
         self.temp_file_path = "%s%s.%s" % (
