@@ -1,11 +1,13 @@
+[![Build Status](https://travis-ci.org/maximilianhurl/google-geocoding-cli.svg)](https://travis-ci.org/maximilianhurl/google-geocoding-cli)
+
+[![Coverage Status](https://coveralls.io/repos/maximilianhurl/google-geocoding-cli/badge.svg)](https://coveralls.io/r/maximilianhurl/google-geocoding-cli)
 
 ## TO DO
 
-- improve custom exceptions
-- improve logging of exceptons - how to use with click?
 - add reverse geocode
 - add tests
 - add support for JSON
+- Improve readme instructions
 
 
 ## Features
