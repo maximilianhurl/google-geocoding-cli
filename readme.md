@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/maximilianhurl/google-geocoding-cli.svg)](https://travis-ci.org/maximilianhurl/google-geocoding-cli)
 
-[![Coverage Status](https://coveralls.io/repos/maximilianhurl/google-geocoding-cli/badge.svg)](https://coveralls.io/r/maximilianhurl/google-geocoding-cli)
+[![Coverage Status](https://coveralls.io/repos/maximilianhurl/google-geocoding-cli/badge.svg?branch=master)](https://coveralls.io/r/maximilianhurl/google-geocoding-cli?branch=master)
+
 
 ## TO DO
 
