@@ -31,4 +31,4 @@ def reverse_geocode(keys, file):
     if validate_options(keys, file):
         geocoding_manager = GeocodingManager(keys=keys, input_file_path=file)
         geocoding_manager.search()
-        click.echo("Gecoding complete!")
+        click.echo("Reverse Gecoding complete!")
