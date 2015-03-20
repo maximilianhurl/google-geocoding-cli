@@ -77,7 +77,7 @@ class ReverseGeocode(SearchBase):
         if self.has_value(row, 'address'):
             return row
 
-        if self.has_value(row, 'longitude') or not self.has_value(row, 'latitude'):
+        if not self.has_value(row, 'longitude') or not self.has_value(row, 'latitude'):
             raise GeocoderException("Missing data: lat/long")
 
         payload = {
