@@ -1,6 +1,7 @@
 import unittest
 from mock import patch
 from scripts.manager import GeocodingManager
+from scripts.search import ReverseGeocode
 from scripts.exceptions import (
     GeocoderException, GeocoderSetupException, GeocoderOverLimitException
 )
@@ -26,16 +27,12 @@ class ManagerTestCase(unittest.TestCase):
             GeocodingManager(keys=None, input_file_path="test.csv")
 
     def test_geocode_reverse_switch(self):
-        manager = GeocodingManager(keys=u'1235', input_file_path="test.csv", query_type='')
-        self.assertEqual(manager.search_handler, None)
-
-        # ======================================================================
-        # ======================================================================
-        #
-        # this test should be finished once the reverse geocoder has been added!
-        #
-        # ======================================================================
-        # ======================================================================
+        manager = GeocodingManager(
+            keys=u'1235',
+            input_file_path="test.csv",
+            query_type=GeocodingManager.REVERSE_GEOCODE_TYPE
+        )
+        self.assertEqual(type(manager.search_handler), ReverseGeocode)
 
     @patch('scripts.manager.CSVFileHandler')
     @patch('scripts.manager.Geocode')

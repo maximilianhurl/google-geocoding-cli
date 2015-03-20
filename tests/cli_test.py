@@ -12,6 +12,7 @@ class GeocodingCLITestCase(unittest.TestCase):
         runner = CliRunner()
         result = runner.invoke(geocode, ['--keys', 'xxxx', '--file', 'test.csv'])
         geocoding_mock.assert_called_with(keys='xxxx', input_file_path='test.csv')
+        geocoding_mock.return_value.search.assert_called_with()
         self.assertEqual(result.output, "Gecoding complete!\n")
 
     def test_geocode_error(self):
@@ -22,9 +23,10 @@ class GeocodingCLITestCase(unittest.TestCase):
     @patch('scripts.googlegeocodingcli.GeocodingManager')
     def test_reverse_geocode(self, geocoding_mock):
         geocoding_mock.return_value.search.return_value = None
+        geocoding_mock.REVERSE_GEOCODE_TYPE = "reverse"
         runner = CliRunner()
         result = runner.invoke(reverse_geocode, ['--keys', 'xxxx', '--file', 'test.csv'])
-        geocoding_mock.assert_called_with(keys='xxxx', input_file_path='test.csv')
+        geocoding_mock.assert_called_with(keys='xxxx', input_file_path='test.csv', query_type="reverse")
         self.assertEqual(result.output, "Reverse Gecoding complete!\n")
 
     def test_reverse_geocode_error(self):

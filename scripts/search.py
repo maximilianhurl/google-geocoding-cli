@@ -25,32 +25,70 @@ class SearchBase(object):
 
         return data
 
+    def has_value(self, row, key):
+        # check if the row dict has a particular value
+        if key in row.keys() and row[key]:
+            return True
+        return False
+
 
 class Geocode(SearchBase):
 
     """
     example query:
-    https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=API_KEY
+    https://maps.googleapis.com/maps/api/geocode/json?address=1600+Parkway,+Mountain+View,+CA&key=API_KEY
     """
 
     URL = "https://maps.googleapis.com/maps/api/geocode/json"
 
     def search(self, row):
 
+        if self.has_value(row, 'longitude') and self.has_value(row, 'latitude'):
+            return row
+
+        if 'address' not in row.keys():
+            raise GeocoderException("Missing data: address")
+
+        payload = {'key': self.current_key, 'address': row['address']}
+        response = requests.get(self.URL, params=payload)
+
+        data = self.validate_response(response)
+
+        # now return the results
+        latlong = data['results'][0]['geometry']['location']
+
+        row['latitude'] = latlong['lat']
+        row['longitude'] = latlong['lng']
+
+        return row
+
+
+class ReverseGeocode(SearchBase):
+
+    """
+    example query:
+    https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=API_KEY
+    """
+
+    URL = "https://maps.googleapis.com/maps/api/geocode/json"
+
+    def search(self, row):
+
+        if self.has_value(row, 'address'):
+            return row
+
         if 'latitude' not in row.keys() or 'longitude' not in row.keys():
+            raise GeocoderException("Missing data: lat/long")
 
-            if 'address' not in row.keys():
-                raise GeocoderException("Missing data: address")
+        payload = {
+            'key': self.current_key,
+            'latlng': "%s,%s" % (row['latitude'], row['longitude'])
+        }
+        response = requests.get(self.URL, params=payload)
 
-            payload = {'key': self.current_key, 'address': row['address']}
-            response = requests.get(self.URL, params=payload)
+        data = self.validate_response(response)
 
-            data = self.validate_response(response)
-
-            # now return the results
-            latlong = data['results'][0]['geometry']['location']
-
-            row['latitude'] = latlong['lat']
-            row['longitude'] = latlong['lng']
+        # now return the results
+        row['address'] = data['results'][0]['formatted_address']
 
         return row
