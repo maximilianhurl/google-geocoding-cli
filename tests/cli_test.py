@@ -6,13 +6,21 @@ from scripts.googlegeocodingcli import geocode, reverse_geocode
 
 class GeocodingCLITestCase(unittest.TestCase):
 
+    @patch('scripts.files.os.path.exists')
     @patch('scripts.googlegeocodingcli.GeocodingManager')
-    def test_geocode(self, geocoding_mock):
+    def test_geocode(self, geocoding_mock, path_exists):
+        path_exists.return_value = True
         geocoding_mock.return_value.search.return_value = None
         runner = CliRunner()
-        result = runner.invoke(geocode, ['--keys', 'xxxx', '--file', 'test.csv'])
-        geocoding_mock.assert_called_with(keys='xxxx', input_file_path='test.csv')
-        self.assertEqual(result.output, "Gecoding complete!\n")
+
+        with runner.isolated_filesystem():
+            with open('test.csv', 'wb') as f:
+                f.write('test')
+
+            result = runner.invoke(geocode, ['--keys', 'xxxx', '--file', 'test.csv'])
+            geocoding_mock.assert_called_with(keys='xxxx', input_file_path='test.csv')
+            geocoding_mock.return_value.search.assert_called_with()
+            self.assertEqual(result.output, "Gecoding complete!\n")
 
     def test_geocode_error(self):
         runner = CliRunner()
@@ -22,10 +30,18 @@ class GeocodingCLITestCase(unittest.TestCase):
     @patch('scripts.googlegeocodingcli.GeocodingManager')
     def test_reverse_geocode(self, geocoding_mock):
         geocoding_mock.return_value.search.return_value = None
+        geocoding_mock.REVERSE_GEOCODE_TYPE = "reverse"
         runner = CliRunner()
-        result = runner.invoke(reverse_geocode, ['--keys', 'xxxx', '--file', 'test.csv'])
-        geocoding_mock.assert_called_with(keys='xxxx', input_file_path='test.csv')
-        self.assertEqual(result.output, "Reverse Gecoding complete!\n")
+
+        with runner.isolated_filesystem():
+            with open('test.csv', 'wb') as f:
+                f.write('test')
+
+            result = runner.invoke(reverse_geocode, ['--keys', 'xxxx', '--file', 'test.csv'])
+            self.assertEqual(result.output, "Reverse Gecoding complete!\n")
+            geocoding_mock.assert_called_with(
+                keys='xxxx', input_file_path='test.csv', query_type="reverse"
+            )
 
     def test_reverse_geocode_error(self):
         runner = CliRunner()

@@ -1,6 +1,7 @@
 import unittest
 from mock import patch
 from scripts.manager import GeocodingManager
+from scripts.search import ReverseGeocode
 from scripts.exceptions import (
     GeocoderException, GeocoderSetupException, GeocoderOverLimitException
 )
@@ -8,10 +9,9 @@ from scripts.exceptions import (
 
 class ManagerTestCase(unittest.TestCase):
 
-    def setUp(self):
-        super(ManagerTestCase, self).setUp()
-
-    def test_keys(self):
+    @patch('scripts.files.os.path.exists')
+    def test_keys(self, path_exists):
+        path_exists.return_value = True
         keys = u"12345,65432"
         manager = GeocodingManager(keys=keys, input_file_path="test.csv")
         self.assertEqual(manager.keys, ['12345', '65432'])
@@ -25,17 +25,15 @@ class ManagerTestCase(unittest.TestCase):
         with self.assertRaisesRegexp(GeocoderSetupException, "Unable to load keys"):
             GeocodingManager(keys=None, input_file_path="test.csv")
 
-    def test_geocode_reverse_switch(self):
-        manager = GeocodingManager(keys=u'1235', input_file_path="test.csv", query_type='')
-        self.assertEqual(manager.search_handler, None)
-
-        # ======================================================================
-        # ======================================================================
-        #
-        # this test should be finished once the reverse geocoder has been added!
-        #
-        # ======================================================================
-        # ======================================================================
+    @patch('scripts.files.os.path.exists')
+    def test_geocode_reverse_switch(self, path_exists):
+        path_exists.return_value = True
+        manager = GeocodingManager(
+            keys=u'1235',
+            input_file_path="test.csv",
+            query_type=GeocodingManager.REVERSE_GEOCODE_TYPE
+        )
+        self.assertEqual(type(manager.search_handler), ReverseGeocode)
 
     @patch('scripts.manager.CSVFileHandler')
     @patch('scripts.manager.Geocode')
@@ -83,8 +81,10 @@ class ManagerTestCase(unittest.TestCase):
 
         self.assertEqual(geocode_instance.search.call_count, 0)
 
+    @patch('scripts.files.os.path.exists')
     @patch('scripts.manager.Geocode')
-    def test_search_row_errors(self, geocode_mock):
+    def test_search_row_errors(self, geocode_mock, path_exists):
+        path_exists.return_value = True
         search_row = ['test']
         manager = GeocodingManager(keys=u"12345,12345", input_file_path="test.csv")
         self.assertEqual(manager.current_key_index, 0)

@@ -28,7 +28,10 @@ def geocode(keys, file):
 @click.option('--keys', help='Comma seperated list of keys XXX,XXX')
 @click.option('--file', help='File with path to geocode', type=click.Path(exists=True))
 def reverse_geocode(keys, file):
+
     if validate_options(keys, file):
-        geocoding_manager = GeocodingManager(keys=keys, input_file_path=file)
+        geocoding_manager = GeocodingManager(
+            keys=keys, input_file_path=file, query_type=GeocodingManager.REVERSE_GEOCODE_TYPE
+        )
         geocoding_manager.search()
         click.echo("Reverse Gecoding complete!")

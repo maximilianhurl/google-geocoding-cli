@@ -1,7 +1,7 @@
 import click
 import time
 from scripts.files import CSVFileHandler
-from scripts.search import Geocode
+from scripts.search import Geocode, ReverseGeocode
 from scripts.exceptions import (
     GeocoderException, GeocoderSetupException, GeocoderOverLimitException
 )
@@ -10,6 +10,7 @@ from scripts.exceptions import (
 class GeocodingManager():
 
     GEOCODE_TYPE = 'geocode'
+    REVERSE_GEOCODE_TYPE = 'reverse_geocode'
 
     def __init__(self, keys, input_file_path, query_type=GEOCODE_TYPE):
 
@@ -25,8 +26,8 @@ class GeocodingManager():
     def get_search_object(self, query_type):
         if query_type == self.GEOCODE_TYPE:
             return Geocode()
-        else:
-            pass
+        elif query_type == self.REVERSE_GEOCODE_TYPE:
+            return ReverseGeocode()
 
     def search(self):
         # loop over data and conduct search query
