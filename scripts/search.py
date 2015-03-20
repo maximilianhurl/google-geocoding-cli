@@ -46,7 +46,7 @@ class Geocode(SearchBase):
         if self.has_value(row, 'longitude') and self.has_value(row, 'latitude'):
             return row
 
-        if 'address' not in row.keys():
+        if not self.has_value(row, 'address'):
             raise GeocoderException("Missing data: address")
 
         payload = {'key': self.current_key, 'address': row['address']}
@@ -77,7 +77,7 @@ class ReverseGeocode(SearchBase):
         if self.has_value(row, 'address'):
             return row
 
-        if 'latitude' not in row.keys() or 'longitude' not in row.keys():
+        if self.has_value(row, 'longitude') or not self.has_value(row, 'latitude'):
             raise GeocoderException("Missing data: lat/long")
 
         payload = {

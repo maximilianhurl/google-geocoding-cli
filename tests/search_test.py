@@ -18,16 +18,21 @@ class SearchTestCase(unittest.TestCase):
     def test_key(self):
         self.assertEqual(self.geocode.current_key, self.key)
 
-    def test_missing_data(self):
-
+    def test_missing_data_address(self):
         data = {
             "latitude": "",
-            "longitude": ""
+            "longitude": "",
+        }
+        with self.assertRaisesRegexp(GeocoderException, "Missing data: address"):
+            self.geocode.search(data)
+
+    def test_contains_lat_long(self):
+        data = {
+            "latitude": "1234",
+            "longitude": "1234",
+            "address": "123 cat street"
         }
         self.assertEqual(self.geocode.search(data), data)
-
-        with self.assertRaisesRegexp(GeocoderException, "Missing data: address"):
-            self.geocode.search({})
 
     @requests_mock.Mocker()
     def test_search_query(self, requests_mock):
