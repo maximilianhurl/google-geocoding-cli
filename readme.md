@@ -5,10 +5,9 @@
 
 ## TO DO
 
-- add reverse geocode
-- add tests
-- add support for JSON
 - Improve readme instructions
+- Add to PyPi
+- add support for JSON
 
 
 ## Features
