@@ -2,14 +2,14 @@ import unittest
 from click.testing import CliRunner
 from mock import patch
 from scripts.googlegeocodingcli import geocode, reverse_geocode
+from tests.common import PathExistsMockMixin
 
 
-class GeocodingCLITestCase(unittest.TestCase):
+class GeocodingCLITestCase(PathExistsMockMixin, unittest.TestCase):
 
-    @patch('scripts.files.os.path.exists')
     @patch('scripts.googlegeocodingcli.GeocodingManager')
-    def test_geocode(self, geocoding_mock, path_exists):
-        path_exists.return_value = True
+    def test_geocode(self, geocoding_mock):
+        self.path_exists.return_value = True
         geocoding_mock.return_value.search.return_value = None
         runner = CliRunner()
 

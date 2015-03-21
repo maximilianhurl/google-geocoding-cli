@@ -2,18 +2,17 @@ import unittest
 from mock import patch, Mock
 from scripts.files import CSVFileHandler
 from scripts.exceptions import GeocoderSetupException, GeocoderException
+from tests.common import PathExistsMockMixin
 
 
-class CSVFileTestCase(unittest.TestCase):
+class CSVFileTestCase(PathExistsMockMixin, unittest.TestCase):
 
-    @patch('scripts.files.os.path.exists')
-    def test_init(self, path_exists):
-
-        path_exists.return_value = False
+    def test_init(self):
+        self.path_exists.return_value = False
         with self.assertRaisesRegexp(GeocoderSetupException, "Unable to find file: /cat/test.csv"):
             CSVFileHandler(input_file_path="/cat/test.csv")
 
-        path_exists.return_value = True
+        self.path_exists.return_value = True
         csvhandler = CSVFileHandler(input_file_path="/cat/test.csv")
         self.assertEqual(csvhandler.input_file_path, "/cat/test.csv")
         self.assertEqual(csvhandler.temp_file_path, "/cat/geocode-result-temp.csv")
@@ -21,34 +20,30 @@ class CSVFileTestCase(unittest.TestCase):
         csvhandler = CSVFileHandler(input_file_path="test.csv")
         self.assertEqual(csvhandler.temp_file_path, "geocode-result-temp.csv")
 
-    @patch('scripts.files.os.path.exists')
     @patch('scripts.files.os.rename')
-    def test_replace_original(self, os_rename, path_exists):
-        path_exists.return_value = True
+    def test_replace_original(self, os_rename):
+        self.path_exists.return_value = True
         csvhandler = CSVFileHandler(input_file_path="test.csv")
         csvhandler.replace_original()
         os_rename.assert_called_with('geocode-result-temp.csv', 'test.csv')
 
-    @patch('scripts.files.os.path.exists')
-    def test_write_row(self, path_exists):
-        path_exists.return_value = True
+    def test_write_row(self):
+        self.path_exists.return_value = True
         csvhandler = CSVFileHandler(input_file_path="test.csv")
         csvhandler.writer = Mock()
         csvhandler.write_result("test")
         csvhandler.writer.writerow.assert_called_with('test')
 
-    @patch('scripts.files.os.path.exists')
-    def test_get_output_cols(self, path_exists):
-        path_exists.return_value = True
+    def test_get_output_cols(self):
+        self.path_exists.return_value = True
         csvhandler = CSVFileHandler(input_file_path="test.csv")
         input_file = Mock()
         input_file.fieldnames = ['test']
         cols = csvhandler.get_output_cols(input_file)
         self.assertEqual(cols, ['test', 'address', 'latitude', 'longitude'])
 
-    @patch('scripts.files.os.path.exists')
-    def test_get_rows(self, path_exists):
-        path_exists.return_value = True
+    def test_get_rows(self):
+        self.path_exists.return_value = True
         csvhandler = CSVFileHandler(input_file_path="test.csv")
         csvhandler.reader = [
             {"test1": "value1"},
@@ -67,9 +62,8 @@ class CSVFileTestCase(unittest.TestCase):
             for row in csvhandler.get_rows():
                 pass
 
-    @patch('scripts.files.os.path.exists')
-    def test_close_files(self, path_exists):
-        path_exists.return_value = True
+    def test_close_files(self):
+        self.path_exists.return_value = True
         csvhandler = CSVFileHandler(input_file_path="test.csv")
         csvhandler.replace_original = Mock()
         csvhandler.input_file = Mock()
@@ -88,11 +82,10 @@ class CSVFileTestCase(unittest.TestCase):
         with self.assertRaisesRegexp(GeocoderException, "Files not open"):
             csvhandler.close_files()
 
-    @patch('scripts.files.os.path.exists')
     @patch('__builtin__.open')
     @patch('scripts.files.csv')
-    def test_setup_files(self, csv_mock, open_mock, path_exists):
-        path_exists.return_value = True
+    def test_setup_files(self, csv_mock, open_mock):
+        self.path_exists.return_value = True
         open_mock.return_value = "cats"
 
         csvhandler = CSVFileHandler(input_file_path="test.csv")
