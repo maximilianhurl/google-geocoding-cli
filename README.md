@@ -2,6 +2,8 @@
 
 [![Coverage Status](https://coveralls.io/repos/maximilianhurl/google-geocoding-cli/badge.svg?branch=master)](https://coveralls.io/r/maximilianhurl/google-geocoding-cli?branch=master)
 
+[![Latest Version](https://pypip.in/version/googlegeocodingcli/badge.svg)](https://pypi.python.org/pypi/googlegeocodingcli/)
+
 
 ## Google Geocoding CLI
 
@@ -25,12 +27,33 @@ When geocoding the CSV file requires a column containing the address.
     
 This will create a temporary file that will store the results of the geocoding and when completed will replace the original file.
 
+| address                          |
+|----------------------------------|
+| 31 Duke Street, Brighton BN1 1AG |
+
+into
+
+| address                          | longitude  | latitude   |
+|----------------------------------|------------|------------|
+| 31 Duke Street, Brighton BN1 1AG | 50.8227147 | -0.1428505 |
+
 
 #### Reverse geocoding (lat,long -> address)
 
 When reverse geocoding the CSV file requires two columns called 'latitude' and 'longitude'.
 
     reverse_geocode --keys xxxxxxxx --file path/test.csv
+
+| longitude  | latitude   |
+|------------|------------|
+| 50.8227147 | -0.1428505 |
+
+into
+
+| address                          | longitude  | latitude   |
+|----------------------------------|------------|------------|
+| 31 Duke Street, Brighton BN1 1AG | 50.8227147 | -0.1428505 |
+
 
 #### Using multiple GoogleAPI keys
 
