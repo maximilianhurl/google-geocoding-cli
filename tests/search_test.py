@@ -6,6 +6,12 @@ from scripts.exceptions import GeocoderException, GeocoderOverLimitException
 
 class SearchTestBase(unittest.TestCase):
 
+    address_data = {
+        "latitude": "1234",
+        "longitude": "1234",
+        "address": "123 cat street"
+    }
+
     def setUp(self):
         super(SearchTestBase, self).setUp()
         self.key = "12345"
@@ -31,12 +37,7 @@ class GeocodeSearchTestCase(SearchTestBase):
             self.geocode.search(data)
 
     def test_contains_lat_long(self):
-        data = {
-            "latitude": "1234",
-            "longitude": "1234",
-            "address": "123 cat street"
-        }
-        self.assertEqual(self.geocode.search(data), data)
+        self.assertEqual(self.geocode.search(self.address_data), self.address_data)
 
     @requests_mock.Mocker()
     def test_search_query(self, requests_mock):
@@ -111,12 +112,7 @@ class ReverseGeocodeSearchTestCase(SearchTestBase):
             self.geocode.search(data)
 
     def test_contains_address(self):
-        data = {
-            "latitude": "1234",
-            "longitude": "1234",
-            "address": "123 cat street"
-        }
-        self.assertEqual(self.geocode.search(data), data)
+        self.assertEqual(self.geocode.search(self.address_data), self.address_data)
 
     @requests_mock.Mocker()
     def test_reverse_search_query(self, requests_mock):
