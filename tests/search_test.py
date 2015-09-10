@@ -134,7 +134,9 @@ class ReverseGeocodeSearchTestCase(SearchTestBase):
 
         response = self.geocode.search(self.data)
         self.assertEqual(response, {
-            'latitude': '0.0111', 'longitude': '0.0222', 'address': 'cat st,seagulltown, uk'
+            'latitude': '0.0111',
+            'longitude': '0.0222',
+            'address': 'cat st,seagulltown, uk'
         })
 
         history = requests_mock.request_history

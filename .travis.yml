@@ -7,3 +7,6 @@ script:
 - flake8 scripts --ignore=E128,E501
 - coverage run  --source=scripts --omit='*__init__.py' tests/test_runner.py $@
 after_success: coveralls
+addons:
+    code_climate:
+        repo_token: 48fc7eb3e7dab294165e642e632288dec58e9ebad5528f6a830fd7c8b472ac20
