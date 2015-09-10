@@ -4,6 +4,8 @@
 
 [![Latest Version](https://pypip.in/version/googlegeocodingcli/badge.svg)](https://pypi.python.org/pypi/googlegeocodingcli/)
 
+[![Code Climate](https://codeclimate.com/github/maximilianhurl/google-geocoding-cli/badges/gpa.svg)](https://codeclimate.com/github/maximilianhurl/google-geocoding-cli)
+
 
 ## Google Geocoding CLI
 
