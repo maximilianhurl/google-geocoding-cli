@@ -1,9 +1,6 @@
 [![Build Status](https://travis-ci.org/maximilianhurl/google-geocoding-cli.svg)](https://travis-ci.org/maximilianhurl/google-geocoding-cli)
-
 [![Coverage Status](https://coveralls.io/repos/maximilianhurl/google-geocoding-cli/badge.svg?branch=master)](https://coveralls.io/r/maximilianhurl/google-geocoding-cli?branch=master)
-
-[![Latest Version](https://pypip.in/version/googlegeocodingcli/badge.svg)](https://pypi.python.org/pypi/googlegeocodingcli/)
-
+[![PyPI version](https://badge.fury.io/py/googlegeocodingcli.svg)](http://badge.fury.io/py/googlegeocodingcli)
 [![Code Climate](https://codeclimate.com/github/maximilianhurl/google-geocoding-cli/badges/gpa.svg)](https://codeclimate.com/github/maximilianhurl/google-geocoding-cli)
 
 
