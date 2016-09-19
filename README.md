@@ -6,7 +6,7 @@
 
 ## Google Geocoding CLI
 
-Takes a CSV containing location data and will carry out geocoding or reverse geocoding using the [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding/).
+Takes a CSV containing location data and will carry out geocoding or reverse geocoding using the [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding/). Supports Python 3 and 2.
 
 
 
