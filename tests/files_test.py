@@ -1,8 +1,9 @@
-import unittest
 from mock import patch, Mock
 from scripts.files import CSVFileHandler
 from scripts.exceptions import GeocoderSetupException, GeocoderException
 from tests.common import PathExistsMockMixin
+import unittest
+import six
 
 
 class CSVFileTestCase(PathExistsMockMixin, unittest.TestCase):
@@ -82,7 +83,7 @@ class CSVFileTestCase(PathExistsMockMixin, unittest.TestCase):
         with self.assertRaisesRegexp(GeocoderException, "Files not open"):
             csvhandler.close_files()
 
-    @patch('__builtin__.open')
+    @patch('{}.open'.format('builtins' if six.PY3 else '__builtin__'))
     @patch('scripts.files.csv')
     def test_setup_files(self, csv_mock, open_mock):
         self.path_exists.return_value = True

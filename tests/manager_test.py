@@ -25,6 +25,11 @@ class ManagerTestCase(PathExistsMockMixin, unittest.TestCase):
         with self.assertRaisesRegexp(GeocoderSetupException, "Unable to load keys"):
             GeocodingManager(keys=None, input_file_path="test.csv")
 
+    def test_keys_type(self):
+        keys = 123
+        with self.assertRaisesRegexp(GeocoderSetupException, "Unable to load keys"):
+            GeocodingManager(keys=keys, input_file_path="test.csv")
+
     def test_geocode_reverse_switch(self):
         self.path_exists.return_value = True
         manager = GeocodingManager(

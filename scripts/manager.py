@@ -1,10 +1,11 @@
-import click
-import time
 from scripts.files import CSVFileHandler
 from scripts.search import Geocode, ReverseGeocode
 from scripts.exceptions import (
     GeocoderException, GeocoderSetupException, GeocoderOverLimitException
 )
+import click
+import time
+import six
 
 
 class GeocodingManager():
@@ -61,7 +62,7 @@ class GeocodingManager():
 
     def validate_keys(self, keys):
         # make sure keys are in correct format and return list
-        if type(keys) is unicode:
+        if type(keys) is six.text_type:
             return keys.split(",")
         else:
             raise GeocoderSetupException("Unable to load keys")

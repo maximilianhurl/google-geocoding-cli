@@ -6,7 +6,7 @@
 
 ## Google Geocoding CLI
 
-Takes a CSV containing location data and will carry out geocoding or reverse geocoding using the [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding/).
+Takes a CSV containing location data and will carry out geocoding or reverse geocoding using the [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding/). Supports Python 3 and 2.
 
 
 
@@ -34,7 +34,7 @@ into
 
 | address                          | longitude  | latitude   |
 |----------------------------------|------------|------------|
-| 31 Duke Street, Brighton BN1 1AG | 50.8227147 | -0.1428505 |
+| 31 Duke Street, Brighton BN1 1AG | -0.1428505 | 50.8227147 |
 
 
 #### Reverse geocoding (lat,long -> address)
@@ -45,22 +45,22 @@ When reverse geocoding the CSV file requires two columns called 'latitude' and '
 
 | longitude  | latitude   |
 |------------|------------|
-| 50.8227147 | -0.1428505 |
+| -0.1428505 | 50.8227147 |
 
 into
 
 | address                          | longitude  | latitude   |
 |----------------------------------|------------|------------|
-| 31 Duke Street, Brighton BN1 1AG | 50.8227147 | -0.1428505 |
+| 31 Duke Street, Brighton BN1 1AG | -0.1428505 | 50.8227147 |
 
 
 #### Using multiple GoogleAPI keys
 
-To increase the number of searches you can conduct per day you can use multiple Google API keys. The keys will be automatically switch through once they reach their daily quota.
+To increase the number of searches you can conduct per day you can use multiple Google API keys. The keys will be automatically switched once they reach their daily quota.
 
     reverse_geocode --keys xxxxxx,xxxxxx,xxxxxx --file path/test.csv
 
-If you reach you daily quota you for all your keys you can run the CLI again the next day and it will start from where it left (when using the resulting file).
+If you reach you daily quota you for all your keys you can run the CLI again the next day and it will start from where it left (when using the same file).
 
 
 ####Running the tests
