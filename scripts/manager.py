@@ -62,12 +62,10 @@ class GeocodingManager():
 
     def validate_keys(self, keys):
         # make sure keys are in correct format and return list
-        if type(keys) is unicode if six.PY2 else True:
-            try:
-                return keys.split(",")
-            except AttributeError:
-                pass
-        raise GeocoderSetupException("Unable to load keys")
+        if type(keys) is six.text_type:
+            return keys.split(",")
+        else:
+            raise GeocoderSetupException("Unable to load keys")
 
     def switch_key(self):
         # switch to next key if there are anymore
