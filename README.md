@@ -34,7 +34,7 @@ into
 
 | address                          | longitude  | latitude   |
 |----------------------------------|------------|------------|
-| 31 Duke Street, Brighton BN1 1AG | 50.8227147 | -0.1428505 |
+| 31 Duke Street, Brighton BN1 1AG | -0.1428505 | 50.8227147 |
 
 
 #### Reverse geocoding (lat,long -> address)
@@ -45,13 +45,13 @@ When reverse geocoding the CSV file requires two columns called 'latitude' and '
 
 | longitude  | latitude   |
 |------------|------------|
-| 50.8227147 | -0.1428505 |
+| -0.1428505 | 50.8227147 |
 
 into
 
 | address                          | longitude  | latitude   |
 |----------------------------------|------------|------------|
-| 31 Duke Street, Brighton BN1 1AG | 50.8227147 | -0.1428505 |
+| 31 Duke Street, Brighton BN1 1AG | -0.1428505 | 50.8227147 |
 
 
 #### Using multiple GoogleAPI keys
