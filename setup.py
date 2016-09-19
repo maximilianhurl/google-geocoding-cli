@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='googlegeocodingcli',
-    version='0.1',
+    version='0.2',
     url='https://github.com/maximilianhurl/google-geocoding-cli',
     packages=find_packages(),
     include_package_data=True,

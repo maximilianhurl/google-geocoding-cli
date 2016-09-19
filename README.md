@@ -56,11 +56,11 @@ into
 
 #### Using multiple GoogleAPI keys
 
-To increase the number of searches you can conduct per day you can use multiple Google API keys. The keys will be automatically switch through once they reach their daily quota.
+To increase the number of searches you can conduct per day you can use multiple Google API keys. The keys will be automatically switched once they reach their daily quota.
 
     reverse_geocode --keys xxxxxx,xxxxxx,xxxxxx --file path/test.csv
 
-If you reach you daily quota you for all your keys you can run the CLI again the next day and it will start from where it left (when using the resulting file).
+If you reach you daily quota you for all your keys you can run the CLI again the next day and it will start from where it left (when using the same file).
 
 
 ####Running the tests
