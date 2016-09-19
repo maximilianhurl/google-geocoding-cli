@@ -15,7 +15,7 @@ class GeocodingCLITestCase(PathExistsMockMixin, unittest.TestCase):
 
         with runner.isolated_filesystem():
             with open('test.csv', 'wb') as f:
-                f.write('test')
+                f.write(b'test')
 
             result = runner.invoke(geocode, ['--keys', 'xxxx', '--file', 'test.csv'])
             geocoding_mock.assert_called_with(keys='xxxx', input_file_path='test.csv')
@@ -35,7 +35,7 @@ class GeocodingCLITestCase(PathExistsMockMixin, unittest.TestCase):
 
         with runner.isolated_filesystem():
             with open('test.csv', 'wb') as f:
-                f.write('test')
+                f.write(b'test')
 
             result = runner.invoke(reverse_geocode, ['--keys', 'xxxx', '--file', 'test.csv'])
             self.assertEqual(result.output, "Reverse Gecoding complete!\n")

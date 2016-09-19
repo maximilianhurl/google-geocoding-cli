@@ -1,6 +1,7 @@
-requests==2.5.1
-click==3.3
-requests-mock==0.6.0
+requests==2.11.1
+click==6.6
+requests-mock==1.1.0
 coveralls==0.5
 flake8==2.4.0
-mock==1.0.1
+mock==2.0.0
+six==1.10.0

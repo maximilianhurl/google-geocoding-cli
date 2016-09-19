@@ -8,3 +8,4 @@ echo "Running flake8"
 flake8 scripts --ignore=E128,E501
 echo ""
 coverage report
+coverage html

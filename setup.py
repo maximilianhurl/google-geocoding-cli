@@ -10,8 +10,9 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
-        'Click>=3.3',
-        'requests>=2.5.1'
+        'Click>=6.6',
+        'requests>=2.11.1',
+        'six>=1.10.0'
     ],
     entry_points='''
         [console_scripts]
